@@ -8,4 +8,3 @@ Werkzeug
 Flask-CORS
 Flask-Mail
 pyjwt
-sqlite3
