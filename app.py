@@ -14,145 +14,18 @@ app.config["SECRET_KEY"] = (
 )
 
 # Email configuration
-app.config['MAIL_SERVER'] = 'libra.vivawebhost.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'no-reply@gtx.com.co'
-app.config['MAIL_PASSWORD'] = '9lmZ=[4M%$Ut'
-app.config['MAIL_DEFAULT_SENDER'] = 'no-reply@gtx.com.co'
+app.config["MAIL_SERVER"] = "libra.vivawebhost.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = "no-reply@gtx.com.co"
+app.config["MAIL_PASSWORD"] = "9lmZ=[4M%$Ut"
+app.config["MAIL_DEFAULT_SENDER"] = "no-reply@gtx.com.co"
 
 mail = Mail(app)
 
 
-def init_db():
-    conn = sqlite3.connect("gtx.db")
-    c = conn.cursor()
-
-    # Users table
-    c.execute(
-        """CREATE TABLE IF NOT EXISTS users
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  username TEXT UNIQUE NOT NULL,
-                  email TEXT UNIQUE NOT NULL,
-                  password TEXT NOT NULL,
-                  first_name TEXT,
-                  last_name TEXT,
-                  mobile_number TEXT,
-                  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                  profile_picture TEXT,
-                  is_verified BOOLEAN DEFAULT FALSE)"""
-    )
-
-    # Newsletter table
-    c.execute(
-        """
-        CREATE TABLE IF NOT EXISTS newsletter (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL
-        )
-    """
-    )
-
-    # Notification table
-    c.execute(
-        """
-        CREATE TABLE IF NOT EXISTS notification (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL
-        )
-    """
-    )
-
-    # Verification table
-    c.execute(
-        """
-        CREATE TABLE IF NOT EXISTS verification (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            token TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """
-    )
-
-    conn.commit()
-    conn.close()
-
-
-init_db()
-
-
-# Helper functions
-def get_db_connection():
-    conn = sqlite3.connect("gtx.db")
-    conn.row_factory = sqlite3.Row
-    return conn
-
-
-def generate_token(user_id):
-    payload = {
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=5),
-        "iat": datetime.datetime.utcnow(),
-        "sub": user_id,
-    }
-    return jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
-
-
-def is_valid_email(email):
-    email_regex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
-    return re.match(email_regex, email) is not None
-
-
-def send_email(to_email, subject, html_content):
-    try:
-        msg = Message(subject, recipients=[to_email], html=html_content)
-        mail.send(msg)
-        print(f"Email sent to {to_email}")
-    except Exception as e:
-        print(f"Failed to send email to {to_email}: {str(e)}")
-
-
-
-# Routes
-@app.route("/", methods=["GET"])
-def index():
-    return "Welcome to the GTX API."
-
-
-@app.route("/signup", methods=["POST"])
-def signup():
-    data = request.get_json()
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
-
-    if not username or not email or not password:
-        return jsonify({"message": "Username, email, and password are required"}), 400
-
-    if not is_valid_email(email):
-        return jsonify({"error": "Invalid email format"}), 400
-
-    if len(password) < 8:
-        return jsonify({"message": "Password must be at least 8 characters long"}), 400
-
-    hashed_password = generate_password_hash(password)
-
-    try:
-        conn = get_db_connection()
-        conn.execute(
-            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-            (username, email, hashed_password),
-        )
-        user_id = conn.execute(
-            "SELECT id FROM users WHERE email = ?", (email,)
-        ).fetchone()["id"]
-
-        # Generate verification token
-        token = generate_token(user_id)
-        verification_link = f"https://gtx.pythonanywhere.com/verify/{token}"
-
-        # Create the email template
-        email_template = f"""
+def generate_email_content(verification_link):
+    return f"""
         <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -2010,199 +1883,31 @@ def signup():
 
 </html>
         """
-        send_email(email, "Welcome to GTX - Your Gateway to Digital Assets!", email_template)
 
 
-        conn.execute(
-            "INSERT INTO verification (user_id, token) VALUES (?, ?)", (user_id, token)
-        )
-        conn.commit()
-        conn.close()
-
-        return (
-            jsonify(
-                {"message": "User created successfully. Please verify your email."}
-            ),
-            201,
-        )
-    except sqlite3.IntegrityError:
-        return jsonify({"message": "Username or email already exists"}), 400
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
-@app.route("/verify/<token>", methods=["GET"])
-def verify_email(token):
-    try:
-        payload = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-        user_id = payload["sub"]
-
-        conn = get_db_connection()
-        user = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
-        if user:
-            conn.execute(
-                "UPDATE users SET is_verified = ? WHERE id = ?", (True, user_id)
-            )
-            conn.execute("DELETE FROM verification WHERE user_id = ?", (user_id,))
-            conn.commit()
-            conn.close()
-            return "Email verified successfully!"
-        else:
-            return "Invalid verification token.", 400
-    except jwt.ExpiredSignatureError:
-        return "Verification link expired. Please sign up again.", 400
-    except jwt.InvalidTokenError:
-        return "Invalid verification token.", 400
-    except Exception as e:
-        return str(e), 500
-
-
-@app.route("/login", methods=["POST"])
-def login():
+@app.route("/send_email", methods=["POST"])
+def send_email():
     data = request.get_json()
     email = data.get("email")
-    password = data.get("password")
+    verification_link = data.get("verification_link")
+
+    if not email or not verification_link:
+        return jsonify({"error": "Email and verification link are required"}), 400
 
     try:
-        conn = get_db_connection()
-        user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-        conn.close()
-        if user and check_password_hash(user["password"], password):
-            if not user["is_verified"]:
-                return (
-                    jsonify({"message": "Please verify your email before logging in."}),
-                    403,
-                )
+        # Generate the email content
+        html_content = generate_email_content(verification_link)
 
-            # Exclude password from the user details
-            user_details = dict(user)
-            del user_details["password"]
-
-            token = jwt.encode(
-                {
-                    "user_id": user["id"],
-                    "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24),
-                },
-                app.config["SECRET_KEY"],
-                algorithm="HS256",
-            )
-
-            return jsonify({"token": token, "user": user_details}), 200
-        else:
-            return jsonify({"message": "Invalid email or password"}), 401
+        # Create and send the email
+        msg = Message(
+            subject="Welcome to GTX - Your Gateway to Digital Assets!",
+            recipients=[email],  # Must be a list
+            html=html_content,
+        )
+        mail.send(msg)
+        return jsonify({"message": f"Email sent to {email}"}), 200
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
-@app.route("/notify", methods=["POST"])
-def notify():
-    data = request.get_json()
-    if not data or "email" not in data:
-        return jsonify({"error": "No email provided"}), 400
-
-    email = data["email"]
-    if not is_valid_email(email):
-        return jsonify({"error": "Invalid email format"}), 400
-
-    conn = get_db_connection()
-    try:
-        conn.execute("INSERT INTO notification (email) VALUES (?)", (email,))
-        conn.commit()
-        conn.close()
-        result = {
-            "message": "Email registered for product launch notifications",
-            "email": email,
-        }
-        return jsonify(result), 201
-    except sqlite3.IntegrityError:
-        return jsonify({"message": "Email already exists"}), 400
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
-@app.route("/newsletter", methods=["POST"])
-def newsletter():
-    data = request.get_json()
-    if not data or "email" not in data:
-        return jsonify({"error": "No email provided"}), 400
-
-    email = data["email"]
-    if not is_valid_email(email):
-        return jsonify({"error": "Invalid email format"}), 400
-
-    conn = get_db_connection()
-    try:
-        conn.execute("INSERT INTO newsletter (email) VALUES (?)", (email,))
-        conn.commit()
-        conn.close()
-        result = {"message": "Email registered for newsletter", "email": email}
-        return jsonify(result), 201
-    except sqlite3.IntegrityError:
-        return jsonify({"message": "Email already exists"}), 400
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
-@app.route("/emails", methods=["GET"])
-def get_emails():
-    try:
-        conn = get_db_connection()
-        notification_emails = conn.execute("SELECT * FROM notification").fetchall()
-        newsletter_emails = conn.execute("SELECT * FROM newsletter").fetchall()
-        conn.close()
-
-        # Convert rows to list of dictionaries
-        notification_emails = [dict(row) for row in notification_emails]
-        newsletter_emails = [dict(row) for row in newsletter_emails]
-
-        result = {
-            "message": "Registered emails retrieved successfully",
-            "notification_emails": notification_emails,
-            "newsletter_emails": newsletter_emails,
-        }
-        return jsonify(result), 200
-    except sqlite3.Error as e:
         return jsonify({"error": str(e)}), 500
-
-
-@app.route("/emails/notification", methods=["GET"])
-def get_notification_emails():
-    try:
-        conn = get_db_connection()
-        notification_emails = conn.execute("SELECT * FROM notification").fetchall()
-        conn.close()
-
-        # Convert rows to list of dictionaries
-        notification_emails = [dict(row) for row in notification_emails]
-
-        result = {
-            "message": "Notification emails retrieved successfully",
-            "notification_emails": notification_emails,
-        }
-        return jsonify(result), 200
-    except sqlite3.Error as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route("/emails/newsletter", methods=["GET"])
-def get_newsletter_emails():
-    try:
-        conn = get_db_connection()
-        newsletter_emails = conn.execute("SELECT * FROM newsletter").fetchall()
-        conn.close()
-
-        # Convert rows to list of dictionaries
-        newsletter_emails = [dict(row) for row in newsletter_emails]
-
-        result = {
-            "message": "Newsletter emails retrieved successfully",
-            "newsletter_emails": newsletter_emails,
-        }
-        return jsonify(result), 200
-    except sqlite3.Error as e:
-        return jsonify({"error": str(e)}), 500
-
-
 
 if __name__ == "__main__":
     app.run()
