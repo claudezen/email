@@ -1,17 +1,11 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_mail import Mail, Message
-import re
-from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
-import jwt
-import datetime
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
-app.config["SECRET_KEY"] = (
-    "gtx9910645c36eebf1e69dd827e825e63de474c00ff27e40ec2045ec8614432b"
-)
+
 
 # Email configuration
 app.config["MAIL_SERVER"] = "libra.vivawebhost.com"
@@ -24,7 +18,7 @@ app.config["MAIL_DEFAULT_SENDER"] = "no-reply@gtx.com.co"
 mail = Mail(app)
 
 
-def generate_email_content(verification_link):
+def generate_email_content(code):
     return f"""
         <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -1023,9 +1017,10 @@ def generate_email_content(verification_link):
                                                 "
                                                 bgcolor="#ffffff"
                                               >
-                                                <a
+                                                <p
                                                   class="pc-font-alt"
                                                   style="
+                                                    cursor: text;
                                                     display: inline-block;
                                                     text-decoration: none;
                                                     font-variant-ligatures: normal;
@@ -1039,19 +1034,16 @@ def generate_email_content(verification_link):
                                                     text-align: center;
                                                     color: #181818;
                                                   "
-                                                  href="{ verification_link }"
-                                                  ><span style="display: block"
-                                                    ><span
-                                                      >VERIFY EMAIL</span
-                                                    ></span
-                                                  ></a
+                                                  >{ code }
+                                                  </p
                                                 >
                                               </td>
                                             </tr>
                                           </table>
                                         <![endif]-->
                                       <!--[if !mso]><!-- -->
-                                      <a style="
+                                      <p style="
+                                            cursor: text;
                                             display: inline-block;
                                             box-sizing: border-box;
                                             border-top: 1px solid #181818;
@@ -1073,8 +1065,7 @@ def generate_email_content(verification_link):
                                             text-decoration: none;
                                             -webkit-text-size-adjust: none;
                                             mso-hide: all;
-                                          " href="{ verification_link }"><span style="display: block"><span>VERIFY
-                                            EMAIL</span></span></a>
+                                          " >{ code }</p>
                                       <!--<![endif]-->
                                     </th>
                                   </tr>
@@ -1889,14 +1880,14 @@ def generate_email_content(verification_link):
 def send_email():
     data = request.get_json()
     email = data.get("email")
-    verification_link = data.get("verification_link")
+    code = data.get("code")
 
-    if not email or not verification_link:
+    if not email or not code:
         return jsonify({"error": "Email and verification link are required"}), 400
 
     try:
         # Generate the email content
-        html_content = generate_email_content(verification_link)
+        html_content = generate_email_content(code)
 
         # Create and send the email
         msg = Message(
