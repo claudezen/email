@@ -12,7 +12,7 @@ app.config["MAIL_SERVER"] = "libra.vivawebhost.com"
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = "no-reply@assetra.xyz"
-app.config["MAIL_PASSWORD"] = "9lmZ=[4M%$Ut"
+app.config["MAIL_PASSWORD"] = "B;Er2x&o$cY]"
 app.config["MAIL_DEFAULT_SENDER"] = "no-reply@assetra.xyz"
 
 mail = Mail(app)
