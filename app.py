@@ -20,388 +20,408 @@ mail = Mail(app)
 
 def generate_email_content(code):
     return f"""
-        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-  xmlns="https://www.w3.org/1999/xhtml"
-  xmlns:v="urn:schemas-microsoft-com:vml"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!--[if !mso]><!-- -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--<![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="format-detection" content="date=no" />
-    <meta name="format-detection" content="address=no" />
-    <meta name="format-detection" content="email=no" />
-    <meta name="x-apple-disable-message-reformatting" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,400;0,400;0,500"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Cinzel:ital,wght@0,400"
-      rel="stylesheet"
-    />
-    <title>Ece</title>
-    <!-- Made with Postcards by Designmodo https://designmodo.com/postcards -->
-    <style>
-      html,
-      body {
-        margin: 0 !important;
-        padding: 0 !important;
-        min-height: 100% !important;
-        width: 100% !important;
-        -webkit-font-smoothing: antialiased;
-      }
+        <!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
 
-      * {
-        -ms-text-size-adjust: 100%;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <!--[if !mso]><!-- -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--<![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="date=no" />
+  <meta name="format-detection" content="address=no" />
+  <meta name="format-detection" content="email=no" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,400;0,500" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Cinzel:ital,wght@0,400" rel="stylesheet" />
+  <title>Welcome to GTX!</title>
+  <style>
+    html,
+    body {{
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 100% !important;
+      width: 100% !important;
+      -webkit-font-smoothing: antialiased;
+    }}
 
-      #outlook a {
-        padding: 0;
-      }
+    * {{
+      -ms-text-size-adjust: 100%;
+    }}
 
-      .ReadMsgBody,
-      .ExternalClass {
-        width: 100%;
-      }
+    #outlook a {{
+      padding: 0;
+    }}
 
-      .ExternalClass,
-      .ExternalClass p,
-      .ExternalClass td,
-      .ExternalClass div,
-      .ExternalClass span,
-      .ExternalClass font {
-        line-height: 100%;
-      }
+    .ReadMsgBody,
+    .ExternalClass {{
+      width: 100%;
+    }}
 
-      table,
-      td,
-      th {
-        mso-table-lspace: 0 !important;
-        mso-table-rspace: 0 !important;
-        border-collapse: collapse;
-      }
+    .ExternalClass,
+    .ExternalClass p,
+    .ExternalClass td,
+    .ExternalClass div,
+    .ExternalClass span,
+    .ExternalClass font {{
+      line-height: 100%;
+    }}
 
-      u + .body table,
-      u + .body td,
-      u + .body th {
-        will-change: transform;
-      }
+    table,
+    td,
+    th {{
+      mso-table-lspace: 0 !important;
+      mso-table-rspace: 0 !important;
+      border-collapse: collapse;
+    }}
 
-      body,
-      td,
-      th,
-      p,
-      div,
-      li,
-      a,
-      span {
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        mso-line-height-rule: exactly;
-      }
+    u+.body table,
+    u+.body td,
+    u+.body th {{
+      will-change: transform;
+    }}
 
-      img {
-        border: 0;
-        outline: 0;
-        line-height: 100%;
-        text-decoration: none;
-        -ms-interpolation-mode: bicubic;
-      }
+    body,
+    td,
+    th,
+    p,
+    div,
+    li,
+    a,
+    span {{
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      mso-line-height-rule: exactly;
+    }}
 
-      a[x-apple-data-detectors] {
-        color: inherit !important;
-        text-decoration: none !important;
-      }
+    img {{
+      border: 0;
+      outline: 0;
+      line-height: 100%;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }}
 
-      .pc-gmail-fix {
+    a[x-apple-data-detectors] {{
+      color: inherit !important;
+      text-decoration: none !important;
+    }}
+
+    .pc-gmail-fix {{
+      display: none;
+      display: none !important;
+    }}
+
+    .body .pc-project-body {{
+      background-color: transparent !important;
+    }}
+
+    @media (min-width: 621px) {{
+      .pc-lg-hide {{
         display: none;
+      }}
+
+      .pc-lg-bg-img-hide {{
+        background-image: none !important;
+      }}
+    }}
+  </style>
+  <style>
+    @media (max-width: 620px) {{
+      .pc-project-body {{
+        min-width: 0px !important;
+      }}
+
+      .pc-project-container {{
+        width: 100% !important;
+      }}
+
+      .pc-sm-hide {{
         display: none !important;
-      }
+      }}
 
-      .body .pc-project-body {
-        background-color: transparent !important;
-      }
+      .pc-sm-bg-img-hide {{
+        background-image: none !important;
+      }}
 
-      @media (min-width: 621px) {
-        .pc-lg-hide {
-          display: none;
-        }
+      .pc-w620-padding-0-0-0-0 {{
+        padding: 0px 0px 0px 0px !important;
+      }}
 
-        .pc-lg-bg-img-hide {
-          background-image: none !important;
-        }
-      }
-    </style>
-    <style>
-      @media (max-width: 620px) {
-        .pc-project-body {
-          min-width: 0px !important;
-        }
-        .pc-project-container {
-          width: 100% !important;
-        }
-        .pc-sm-hide {
-          display: none !important;
-        }
-        .pc-sm-bg-img-hide {
-          background-image: none !important;
-        }
-        .pc-w620-padding-0-0-0-0 {
-          padding: 0px 0px 0px 0px !important;
-        }
-        table.pc-w620-spacing-24-0-24-0 {
-          margin: 24px 0px 24px 0px !important;
-        }
-        td.pc-w620-spacing-24-0-24-0,
-        th.pc-w620-spacing-24-0-24-0 {
-          margin: 0 !important;
-          padding: 24px 0px 24px 0px !important;
-        }
-        .pc-w620-width-100 {
-          width: 100px !important;
-        }
-        .pc-w620-height-auto {
-          height: auto !important;
-        }
-        .pc-w620-itemsSpacings-18-0 {
-          padding-left: 9px !important;
-          padding-right: 9px !important;
-          padding-top: 0px !important;
-          padding-bottom: 0px !important;
-        }
-        .pc-w620-width-hug {
-          width: auto !important;
-        }
-        table.pc-w620-spacing-0-0-24-0 {
-          margin: 0px 0px 24px 0px !important;
-        }
-        td.pc-w620-spacing-0-0-24-0,
-        th.pc-w620-spacing-0-0-24-0 {
-          margin: 0 !important;
-          padding: 0px 0px 24px 0px !important;
-        }
-        .pc-w620-width-101 {
-          width: 101px !important;
-        }
-        table.pc-w620-spacing-0-0-0-0 {
-          margin: 0px 0px 0px 0px !important;
-        }
-        td.pc-w620-spacing-0-0-0-0,
-        th.pc-w620-spacing-0-0-0-0 {
-          margin: 0 !important;
-          padding: 0px 0px 0px 0px !important;
-        }
-        div.pc-w620-textAlign-center,
-        th.pc-w620-textAlign-center,
-        a.pc-w620-textAlign-center,
-        td.pc-w620-textAlign-center {
-          text-align: center !important;
-          text-align-last: center !important;
-        }
-        table.pc-w620-textAlign-center {
-          float: none !important;
-          margin-right: auto !important;
-          margin-left: auto !important;
-        }
-        img.pc-w620-textAlign-center {
-          margin-right: auto !important;
-          margin-left: auto !important;
-        }
-        .pc-w620-width-73 {
-          width: 73px !important;
-        }
-        .pc-w620-padding-8-24-24-24 {
-          padding: 8px 24px 24px 24px !important;
-        }
-        .pc-w620-itemsSpacings-0-16 {
-          padding-left: 0px !important;
-          padding-right: 0px !important;
-          padding-top: 8px !important;
-          padding-bottom: 8px !important;
-        }
-        .pc-w620-dir-rtl {
-          direction: rtl !important;
-        }
+      table.pc-w620-spacing-24-0-24-0 {{
+        margin: 24px 0px 24px 0px !important;
+      }}
 
-        .pc-w620-width-fill {
-          width: 100% !important;
-        }
-        .pc-w620-width-130 {
-          width: 130px !important;
-        }
-        .pc-w620-width-120 {
-          width: 120px !important;
-        }
-        .pc-w620-height-1 {
-          height: 1px !important;
-        }
-        table.pc-w620-spacing-0-0-16-0 {
-          margin: 0px 0px 16px 0px !important;
-        }
-        td.pc-w620-spacing-0-0-16-0,
-        th.pc-w620-spacing-0-0-16-0 {
-          margin: 0 !important;
-          padding: 0px 0px 16px 0px !important;
-        }
-        .pc-w620-fontSize-40px {
-          font-size: 40px !important;
-        }
-        .pc-w620-fontSize-15px {
-          font-size: 15px !important;
-        }
-        .pc-w620-lineHeight-139pc {
-          line-height: 139% !important;
-        }
-        .pc-w620-padding-32-24-24-24 {
-          padding: 32px 24px 24px 24px !important;
-        }
-        .pc-w620-itemsSpacings-20-0 {
-          padding-left: 10px !important;
-          padding-right: 10px !important;
-          padding-top: 0px !important;
-          padding-bottom: 0px !important;
-        }
-        .pc-w620-fontSize-13px {
-          font-size: 13px !important;
-        }
-        .pc-w620-width-270 {
-          width: 270px !important;
-        }
-        .pc-w620-padding-30-24-30-24 {
-          padding: 30px 24px 30px 24px !important;
-        }
+      td.pc-w620-spacing-24-0-24-0,
+      th.pc-w620-spacing-24-0-24-0 {{
+        margin: 0 !important;
+        padding: 24px 0px 24px 0px !important;
+      }}
 
-        .pc-w620-gridCollapsed-1 > tbody,
-        .pc-w620-gridCollapsed-1 > tbody > tr,
-        .pc-w620-gridCollapsed-1 > tr {
-          display: inline-block !important;
-        }
-        .pc-w620-gridCollapsed-1.pc-width-fill > tbody,
-        .pc-w620-gridCollapsed-1.pc-width-fill > tbody > tr,
-        .pc-w620-gridCollapsed-1.pc-width-fill > tr {
-          width: 100% !important;
-        }
-        .pc-w620-gridCollapsed-1.pc-w620-width-fill > tbody,
-        .pc-w620-gridCollapsed-1.pc-w620-width-fill > tbody > tr,
-        .pc-w620-gridCollapsed-1.pc-w620-width-fill > tr {
-          width: 100% !important;
-        }
-        .pc-w620-gridCollapsed-1 > tbody > tr > td,
-        .pc-w620-gridCollapsed-1 > tr > td {
-          display: block !important;
-          width: auto !important;
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-          margin-left: 0 !important;
-        }
-        .pc-w620-gridCollapsed-1.pc-width-fill > tbody > tr > td,
-        .pc-w620-gridCollapsed-1.pc-width-fill > tr > td {
-          width: 100% !important;
-        }
-        .pc-w620-gridCollapsed-1.pc-w620-width-fill > tbody > tr > td,
-        .pc-w620-gridCollapsed-1.pc-w620-width-fill > tr > td {
-          width: 100% !important;
-        }
-        .pc-w620-gridCollapsed-1
-          > tbody
-          > .pc-grid-tr-first
-          > .pc-grid-td-first,
-        pc-w620-gridCollapsed-1 > .pc-grid-tr-first > .pc-grid-td-first {
-          padding-top: 0 !important;
-        }
-        .pc-w620-gridCollapsed-1 > tbody > .pc-grid-tr-last > .pc-grid-td-last,
-        pc-w620-gridCollapsed-1 > .pc-grid-tr-last > .pc-grid-td-last {
-          padding-bottom: 0 !important;
-        }
+      .pc-w620-width-100 {{
+        width: 100px !important;
+      }}
 
-        .pc-w620-gridCollapsed-0 > tbody > .pc-grid-tr-first > td,
-        .pc-w620-gridCollapsed-0 > .pc-grid-tr-first > td {
-          padding-top: 0 !important;
-        }
-        .pc-w620-gridCollapsed-0 > tbody > .pc-grid-tr-last > td,
-        .pc-w620-gridCollapsed-0 > .pc-grid-tr-last > td {
-          padding-bottom: 0 !important;
-        }
-        .pc-w620-gridCollapsed-0 > tbody > tr > .pc-grid-td-first,
-        .pc-w620-gridCollapsed-0 > tr > .pc-grid-td-first {
-          padding-left: 0 !important;
-        }
-        .pc-w620-gridCollapsed-0 > tbody > tr > .pc-grid-td-last,
-        .pc-w620-gridCollapsed-0 > tr > .pc-grid-td-last {
-          padding-right: 0 !important;
-        }
+      .pc-w620-height-auto {{
+        height: auto !important;
+      }}
 
-        .pc-w620-tableCollapsed-1 > tbody,
-        .pc-w620-tableCollapsed-1 > tbody > tr,
-        .pc-w620-tableCollapsed-1 > tr {
-          display: block !important;
-        }
-        .pc-w620-tableCollapsed-1.pc-width-fill > tbody,
-        .pc-w620-tableCollapsed-1.pc-width-fill > tbody > tr,
-        .pc-w620-tableCollapsed-1.pc-width-fill > tr {
-          width: 100% !important;
-        }
-        .pc-w620-tableCollapsed-1.pc-w620-width-fill > tbody,
-        .pc-w620-tableCollapsed-1.pc-w620-width-fill > tbody > tr,
-        .pc-w620-tableCollapsed-1.pc-w620-width-fill > tr {
-          width: 100% !important;
-        }
-        .pc-w620-tableCollapsed-1 > tbody > tr > td,
-        .pc-w620-tableCollapsed-1 > tr > td {
-          display: block !important;
-          width: auto !important;
-        }
-        .pc-w620-tableCollapsed-1.pc-width-fill > tbody > tr > td,
-        .pc-w620-tableCollapsed-1.pc-width-fill > tr > td {
-          width: 100% !important;
-          box-sizing: border-box !important;
-        }
-        .pc-w620-tableCollapsed-1.pc-w620-width-fill > tbody > tr > td,
-        .pc-w620-tableCollapsed-1.pc-w620-width-fill > tr > td {
-          width: 100% !important;
-          box-sizing: border-box !important;
-        }
-      }
-    </style>
-    <!--[if !mso]><!-- -->
-    <style>
-      @media all {
-        @font-face {
-          font-family: "Poppins";
-          font-style: normal;
-          font-weight: 400;
-          src: url("https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrJJnedA.woff")
-              format("woff"),
-            url("https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrJJnecg.woff2")
-              format("woff2");
-        }
-        @font-face {
-          font-family: "Poppins";
-          font-style: normal;
-          font-weight: 500;
-          src: url("https://fonts.gstatic.com/s/poppins/v21/pxiByp8kv8JHgFVrLGT9Z1JlEw.woff")
-              format("woff"),
-            url("https://fonts.gstatic.com/s/poppins/v21/pxiByp8kv8JHgFVrLGT9Z1JlFQ.woff2")
-              format("woff2");
-        }
-      }
-    </style>
-    <!--<![endif]-->
-    <!--[if mso]>
+      .pc-w620-itemsSpacings-18-0 {{
+        padding-left: 9px !important;
+        padding-right: 9px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+      }}
+
+      .pc-w620-width-hug {{
+        width: auto !important;
+      }}
+
+      table.pc-w620-spacing-0-0-24-0 {{
+        margin: 0px 0px 24px 0px !important;
+      }}
+
+      td.pc-w620-spacing-0-0-24-0,
+      th.pc-w620-spacing-0-0-24-0 {{
+        margin: 0 !important;
+        padding: 0px 0px 24px 0px !important;
+      }}
+
+      .pc-w620-width-101 {{
+        width: 101px !important;
+      }}
+
+      table.pc-w620-spacing-0-0-0-0 {{
+        margin: 0px 0px 0px 0px !important;
+      }}
+
+      td.pc-w620-spacing-0-0-0-0,
+      th.pc-w620-spacing-0-0-0-0 {{
+        margin: 0 !important;
+        padding: 0px 0px 0px 0px !important;
+      }}
+
+      div.pc-w620-textAlign-center,
+      th.pc-w620-textAlign-center,
+      a.pc-w620-textAlign-center,
+      td.pc-w620-textAlign-center {{
+        text-align: center !important;
+        text-align-last: center !important;
+      }}
+
+      table.pc-w620-textAlign-center {{
+        float: none !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+      }}
+
+      img.pc-w620-textAlign-center {{
+        margin-right: auto !important;
+        margin-left: auto !important;
+      }}
+
+      .pc-w620-width-73 {{
+        width: 73px !important;
+      }}
+
+      .pc-w620-padding-8-24-24-24 {{
+        padding: 8px 24px 24px 24px !important;
+      }}
+
+      .pc-w620-width-78pc {{
+        width: 78% !important;
+      }}
+
+      .pc-w620-fontSize-40px {{
+        font-size: 40px !important;
+      }}
+
+      .pc-w620-lineHeight-40 {{
+        line-height: 40px !important;
+      }}
+
+      table.pc-w620-spacing-0-0-32-0 {{
+        margin: 0px 0px 32px 0px !important;
+      }}
+
+      td.pc-w620-spacing-0-0-32-0,
+      th.pc-w620-spacing-0-0-32-0 {{
+        margin: 0 !important;
+        padding: 0px 0px 32px 0px !important;
+      }}
+
+      .pc-w620-fontSize-15px {{
+        font-size: 15px !important;
+      }}
+
+      .pc-w620-lineHeight-139pc {{
+        line-height: 139% !important;
+      }}
+
+      .pc-w620-padding-24-24-48-24 {{
+        padding: 24px 24px 48px 24px !important;
+      }}
+
+      .pc-w620-itemsSpacings-20-0 {{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+      }}
+
+      .pc-w620-fontSize-13px {{
+        font-size: 13px !important;
+      }}
+
+      .pc-w620-width-270 {{
+        width: 270px !important;
+      }}
+
+      .pc-w620-height-1 {{
+        height: 1px !important;
+      }}
+
+      .pc-w620-padding-30-24-30-24 {{
+        padding: 30px 24px 30px 24px !important;
+      }}
+
+      .pc-w620-gridCollapsed-1>tbody,
+      .pc-w620-gridCollapsed-1>tbody>tr,
+      .pc-w620-gridCollapsed-1>tr {{
+        display: inline-block !important;
+      }}
+
+      .pc-w620-gridCollapsed-1.pc-width-fill>tbody,
+      .pc-w620-gridCollapsed-1.pc-width-fill>tbody>tr,
+      .pc-w620-gridCollapsed-1.pc-width-fill>tr {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-gridCollapsed-1.pc-w620-width-fill>tbody,
+      .pc-w620-gridCollapsed-1.pc-w620-width-fill>tbody>tr,
+      .pc-w620-gridCollapsed-1.pc-w620-width-fill>tr {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-gridCollapsed-1>tbody>tr>td,
+      .pc-w620-gridCollapsed-1>tr>td {{
+        display: block !important;
+        width: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-1.pc-width-fill>tbody>tr>td,
+      .pc-w620-gridCollapsed-1.pc-width-fill>tr>td {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-gridCollapsed-1.pc-w620-width-fill>tbody>tr>td,
+      .pc-w620-gridCollapsed-1.pc-w620-width-fill>tr>td {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-gridCollapsed-1>tbody>.pc-grid-tr-first>.pc-grid-td-first,
+      pc-w620-gridCollapsed-1>.pc-grid-tr-first>.pc-grid-td-first {{
+        padding-top: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-1>tbody>.pc-grid-tr-last>.pc-grid-td-last,
+      pc-w620-gridCollapsed-1>.pc-grid-tr-last>.pc-grid-td-last {{
+        padding-bottom: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-0>tbody>.pc-grid-tr-first>td,
+      .pc-w620-gridCollapsed-0>.pc-grid-tr-first>td {{
+        padding-top: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-0>tbody>.pc-grid-tr-last>td,
+      .pc-w620-gridCollapsed-0>.pc-grid-tr-last>td {{
+        padding-bottom: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-0>tbody>tr>.pc-grid-td-first,
+      .pc-w620-gridCollapsed-0>tr>.pc-grid-td-first {{
+        padding-left: 0 !important;
+      }}
+
+      .pc-w620-gridCollapsed-0>tbody>tr>.pc-grid-td-last,
+      .pc-w620-gridCollapsed-0>tr>.pc-grid-td-last {{
+        padding-right: 0 !important;
+      }}
+
+      .pc-w620-tableCollapsed-1>tbody,
+      .pc-w620-tableCollapsed-1>tbody>tr,
+      .pc-w620-tableCollapsed-1>tr {{
+        display: block !important;
+      }}
+
+      .pc-w620-tableCollapsed-1.pc-width-fill>tbody,
+      .pc-w620-tableCollapsed-1.pc-width-fill>tbody>tr,
+      .pc-w620-tableCollapsed-1.pc-width-fill>tr {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-tableCollapsed-1.pc-w620-width-fill>tbody,
+      .pc-w620-tableCollapsed-1.pc-w620-width-fill>tbody>tr,
+      .pc-w620-tableCollapsed-1.pc-w620-width-fill>tr {{
+        width: 100% !important;
+      }}
+
+      .pc-w620-tableCollapsed-1>tbody>tr>td,
+      .pc-w620-tableCollapsed-1>tr>td {{
+        display: block !important;
+        width: auto !important;
+      }}
+
+      .pc-w620-tableCollapsed-1.pc-width-fill>tbody>tr>td,
+      .pc-w620-tableCollapsed-1.pc-width-fill>tr>td {{
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }}
+
+      .pc-w620-tableCollapsed-1.pc-w620-width-fill>tbody>tr>td,
+      .pc-w620-tableCollapsed-1.pc-w620-width-fill>tr>td {{
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }}
+    }}
+  </style>
+  <!--[if !mso]><!-- -->
+  <style>
+    @media all {{
+      @font-face {{
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 500;
+        src: url("https://fonts.gstatic.com/s/poppins/v21/pxiByp8kv8JHgFVrLGT9Z1JlEw.woff") format("woff"),
+          url("https://fonts.gstatic.com/s/poppins/v21/pxiByp8kv8JHgFVrLGT9Z1JlFQ.woff2") format("woff2");
+      }}
+
+      @font-face {{
+        font-family: "Cinzel";
+        font-style: normal;
+        font-weight: 400;
+        src: url("https://fonts.gstatic.com/s/cinzel/v23/8vIU7ww63mVu7gtR-kwKxNvkNOjw-tbnfYPlCw.woff") format("woff"),
+          url("https://fonts.gstatic.com/s/cinzel/v23/8vIU7ww63mVu7gtR-kwKxNvkNOjw-tbnfYPlDQ.woff2") format("woff2");
+      }}
+    }}
+  </style>
+  <!--<![endif]-->
+  <!--[if mso]>
       <style type="text/css">
-        .pc-font-alt {
+        .pc-font-alt {{
           font-family: Arial, Helvetica, sans-serif !important;
-        }
+        }}
       </style>
     <![endif]-->
-    <!--[if gte mso 9]>
+  <!--[if gte mso 9]>
       <xml>
         <o:OfficeDocumentSettings>
           <o:AllowPNG />
@@ -409,7 +429,7 @@ def generate_email_content(code):
         </o:OfficeDocumentSettings>
       </xml>
     <![endif]-->
-  </head>
+</head>
 
   <body
     class="body pc-font-alt"
