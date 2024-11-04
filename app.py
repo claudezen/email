@@ -3393,7 +3393,7 @@ def send_email():
 
         # Create and send the email
         msg = Message(
-            subject="Welcome to GTX - Your Gateway to Digital Assets!",
+            subject="Welcome to Assetra - Your Gateway to Digital Assets!",
             recipients=[email],  # Must be a list
             html=html_content,
         )
